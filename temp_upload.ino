@@ -22,8 +22,8 @@ MacEntry mac("MAC", "12:34:56:78:9A:BC", "mac address");
 //  ip
 BoolEntry dhcp("DHCP", "true", "DHCP enable/disable");
 IPAddressEntry ip("IP", "192.168.0.2", "IP address");
-IPAddressEntry gw("GW", "255.255.255.0", "default gateway IP address");
-IPAddressEntry sm("SM", "192.168.0.1", "subnet mask");
+IPAddressEntry gw("GW", "192.168.0.1", "default gateway IP address");
+IPAddressEntry sm("SM", "255.255.255.0", "subnet mask");
 IPAddressEntry dns_server("DNS", "8.8.8.8", "dns server");
 //  ntp
 StringEntry ntp("NTP", "ntp.nict.jp", "ntp server");
@@ -44,7 +44,7 @@ FIAPUploadAgent fiap_upload_agent;
 char *timezone_p;
 char temperature_str[16];
 struct fiap_element fiap_elements [] = {
-  { "Temperature", temperature_str, 0, 0, 0, 0, 0, 0, timezone_p, }, 
+  { "Temperature", temperature_str, 0, 0, 0, 0, 0, 0, timezone_p, },
 };
 
 //sensor
@@ -90,7 +90,7 @@ void setup()
       restart("Failed to configure Ethernet using DHCP", 10);
     }
   }else{
-    Ethernet.begin(mac.get_val(), ip.get_val(), dns_server.get_val(), gw.get_val(), sm.get_val()); 
+    Ethernet.begin(mac.get_val(), ip.get_val(), dns_server.get_val(), gw.get_val(), sm.get_val());
   }
 
   // fetch time
