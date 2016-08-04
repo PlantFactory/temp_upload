@@ -22,8 +22,8 @@ MacEntry mac("MAC", "12:34:56:78:9A:BC", "mac address");
 //  ip
 BoolEntry dhcp("DHCP", "true", "DHCP enable/disable");
 IPAddressEntry ip("IP", "192.168.0.2", "IP address");
-IPAddressEntry gw("GW", "192.168.0.1", "default gateway IP address");
-IPAddressEntry sm("SM", "255.255.255.0", "subnet mask");
+IPAddressEntry gw("GW", "255.255.255.0", "default gateway IP address");
+IPAddressEntry sm("SM", "192.168.0.1", "subnet mask");
 IPAddressEntry dns_server("DNS", "8.8.8.8", "dns server");
 //  ntp
 StringEntry ntp("NTP", "ntp.nict.jp", "ntp server");
