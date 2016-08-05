@@ -5,18 +5,24 @@
  * Created:  2016-02-18
  */
 
+// Arduino library
 #ifndef ESP8266
 #include <Ethernet.h>
 #else
 #include <ESP8266WiFi.h>
 #endif
 
+#include <Wire.h>
+
+// third party library
 #include <PFFIAPUploadAgent.h>
 #include <Time.h>
 #include <SerialCLI.h>
 #include <ADT74x0.h>
 #include <NTP.h>
-#include <Wire.h>
+
+// C library
+#include <math.h>
 
 //cli
 SerialCLI commandline(Serial);
@@ -158,6 +164,7 @@ void setup()
 void loop()
 {
   static unsigned long old_epoch = 0, epoch;
+  float temp;
 
   commandline.process();
   epoch = now();
@@ -168,13 +175,14 @@ void loop()
 #endif
 
   if(epoch != old_epoch){
-    char buf[32];
-    sprintf(buf, "temperature = %f", tempsensor.readTemperature());
-    debug_msg(buf);
+    // 計測
+    temp = tempsensor.readTemperature();
 
-    if(epoch % 60 == 0){
+    debug_msg(String(temp, 3).c_str());
+
+    if(epoch % 60 == 0 && !isnan(temp)){
       debug_msg("uploading...");
-      sprintf(temperature_str, "%f", tempsensor.readTemperature());
+      sprintf(temperature_str, "%s", String(temp, 3).c_str());
       sprintf(timezone_str, "%s", timezone.get_val().c_str());
 
       for(int i = 0; i < sizeof(fiap_elements)/sizeof(fiap_elements[0]); i++){
