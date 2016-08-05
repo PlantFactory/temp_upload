@@ -165,6 +165,7 @@ void loop()
 {
   static unsigned long old_epoch = 0, epoch;
   float temp;
+  char buf[32];
 
   commandline.process();
   epoch = now();
@@ -178,11 +179,12 @@ void loop()
     // 計測
     temp = tempsensor.readTemperature();
 
-    debug_msg(String(temp, 3).c_str());
+    sprintf(buf, "%d.%d", (int)temp, (int)(temp*100)%100);
+    debug_msg(buf);
 
     if(epoch % 60 == 0 && !isnan(temp)){
       debug_msg("uploading...");
-      sprintf(temperature_str, "%s", String(temp, 3).c_str());
+      sprintf(temperature_str, "%d.%d", (int)temp, (int)(temp*100)%100);
       sprintf(timezone_str, "%s", timezone.get_val().c_str());
 
       for(int i = 0; i < sizeof(fiap_elements)/sizeof(fiap_elements[0]); i++){
