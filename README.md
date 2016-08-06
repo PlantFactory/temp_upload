@@ -11,11 +11,11 @@ This sample program will upload the temperature every minute.
 
 ##Electrical Connection
 
-Arduino : ADT7410(or ADT7420)
-VCC <-> VDD
-GND <-> GND
-SCL <-> SCL
-SDA <-> SDA
+    Arduino : ADT7410(or ADT7420)
+    VCC <-> VDD
+    GND <-> GND
+    SCL <-> SCL
+    SDA <-> SDA
 
 ## Dependent Libraries
 
