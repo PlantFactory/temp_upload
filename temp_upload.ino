@@ -38,6 +38,7 @@ BoolEntry dhcp("DHCP", "true", "DHCP enable/disable");
 IPAddressEntry ip("IP", "192.168.0.2", "IP address");
 IPAddressEntry gw("GW", "192.168.0.1", "default gateway IP address");
 IPAddressEntry sm("SM", "255.255.255.0", "subnet mask");
+//  dns
 IPAddressEntry dns_server("DNS", "8.8.8.8", "dns server");
 //  ntp
 StringEntry ntp("NTP", "ntp.nict.jp", "ntp server");
@@ -109,7 +110,7 @@ void setup()
   commandline.add_command("debug", enable_debug);
   commandline.add_command("nodebug", disable_debug);
 
-  commandline.begin(9600, "SerialCLI Sample");
+  commandline.begin(9600, "temp_upload ver.0.0.2");
 
 #ifndef ESP8266
   // ethernet & ip connection
@@ -200,8 +201,8 @@ void loop()
         debug_msg("done");
       }else{
         debug_msg("failed");
+        debug_msg("code:"+ret);
       }
-      Serial.println(ret);
     }
   }
 
