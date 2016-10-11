@@ -16,7 +16,7 @@
 
 // third party library
 #include <PFFIAPUploadAgent.h>
-#include <Time.h>
+#include <TimeLib.h>
 #include <SerialCLI.h>
 #include <ADT74x0.h>
 #include <NTP.h>
