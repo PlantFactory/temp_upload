@@ -10,6 +10,7 @@
 
 #include <PFFIAPUploadAgent.h>
 #include <TimeLib.h>
+#include <LocalTimeLib.h>
 #include <SerialCLI.h>
 #include <ADT74x0.h>
 #include <NTP.h>
@@ -32,19 +33,18 @@ StringEntry host("HOST", "fiap-dev.gutp.ic.i.u-tokyo.ac.jp", "host of ieee1888 s
 IntegerEntry port("PORT", "80", "port of ieee1888 server end point");
 StringEntry path("PATH", "/axis2/services/FIAPStorage", "path of ieee1888 server end point");
 StringEntry prefix("PREFIX", "http://taisyo.hongo.wide.ad.jp/MyHome/Node1/", "prefix of point id");
-StringEntry timezone("TIMEZONE", "+09:00", "timezone");
 //  debug
 int debug = 0;
 
 //ntp
 NTPClient ntpclient;
+TimeZone localtimezone = { 9*60*60, 0, "+09:00" };
 
 //fiap
 FIAPUploadAgent fiap_upload_agent;
-char *timezone_p;
 char temperature_str[16];
 struct fiap_element fiap_elements [] = {
-  { "Temperature", temperature_str, 0, 0, 0, 0, 0, 0, timezone_p, },
+  { "Temperature", temperature_str, 0, &localtimezone, },
 };
 
 //sensor
@@ -100,7 +100,7 @@ void setup()
   if(ret < 0){
     restart("Failed to configure time using NTP", 10);
   }
-  setTime(unix_time + (9 * 60 * 60));
+  setTime(unix_time);
 
   // fiap
   fiap_upload_agent.begin(host.get_val(), path.get_val(), port.get_val(), prefix.get_val());
@@ -123,20 +123,16 @@ void loop()
   if(epoch != old_epoch){
     char buf[32];
     sprintf(buf, "temperature = %f", tempsensor.readTemperature());
+    //dtostrf(tempsensor.readTemperature(), 16, 2, buf);
     debug_msg(buf);
 
     if(epoch % 60 == 0){
       debug_msg("uploading...");
-      sprintf(temperature_str, "%f", tempsensor.readTemperature());
-      timezone_p = (char*)timezone.get_val().c_str();
+      sprintf(buf, "temperature = %f", tempsensor.readTemperature());
+      //dtostrf(tempsensor.readTemperature(), 16, 2, buf);
 
       for(int i = 0; i < sizeof(fiap_elements)/sizeof(fiap_elements[0]); i++){
-        fiap_elements[i].year = year();
-        fiap_elements[i].month  = month();
-        fiap_elements[i].day = day();
-        fiap_elements[i].hour = hour();
-        fiap_elements[i].minute = minute();
-        fiap_elements[i].second = second();
+        fiap_elements[i].time = epoch;
       }
       int ret = fiap_upload_agent.post(fiap_elements, sizeof(fiap_elements)/sizeof(fiap_elements[0]));
       if(ret == 0){
