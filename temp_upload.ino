@@ -17,22 +17,22 @@
 #include <Wire.h>
 
 //cli
-SerialCLI commandline(Serial);
+SerialCLI      commandline(Serial);
 //  ethernet
-MacEntry mac("MAC", "12:34:56:78:9A:BC", "mac address");
+MacEntry       mac("MAC", "01:23:45:67:89:AB", "mac address");
 //  ip
-BoolEntry dhcp("DHCP", "true", "DHCP enable/disable");
+BoolEntry      dhcp("DHCP", "true", "DHCP enable/disable");
 IPAddressEntry ip("IP", "192.168.0.2", "IP address");
 IPAddressEntry gw("GW", "192.168.0.1", "default gateway IP address");
 IPAddressEntry sm("SM", "255.255.255.0", "subnet mask");
 IPAddressEntry dns_server("DNS", "8.8.8.8", "dns server");
 //  ntp
-StringEntry ntp("NTP", "ntp.nict.jp", "ntp server");
+StringEntry    ntp("NTP", "ntp.nict.jp", "ntp server");
 //  fiap
-StringEntry host("HOST", "fiap-dev.gutp.ic.i.u-tokyo.ac.jp", "host of ieee1888 server end point");
-IntegerEntry port("PORT", "80", "port of ieee1888 server end point");
-StringEntry path("PATH", "/axis2/services/FIAPStorage", "path of ieee1888 server end point");
-StringEntry prefix("PREFIX", "http://taisyo.hongo.wide.ad.jp/MyHome/Node1/", "prefix of point id");
+StringEntry    host("HOST", "fiap-dev.gutp.ic.i.u-tokyo.ac.jp", "host of ieee1888 server end point");
+IntegerEntry   port("PORT", "80", "port of ieee1888 server end point");
+StringEntry    path("PATH", "/axis2/services/FIAPStorage", "path of ieee1888 server end point");
+StringEntry    prefix("PREFIX", "http://taisyo.hongo.wide.ad.jp/MyHome/Node1/", "prefix of point id");
 //  debug
 int debug = 0;
 
