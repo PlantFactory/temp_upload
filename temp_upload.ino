@@ -81,7 +81,7 @@ void setup()
   commandline.add_command("debug", enable_debug);
   commandline.add_command("nodebug", disable_debug);
 
-  commandline.begin(9600, "SerialCLI Sample");
+  commandline.begin(9600, "ADT74x0 Gateway");
 
   // ethernet & ip connection
   if(dhcp.get_val() == 1){
