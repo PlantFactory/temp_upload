@@ -137,8 +137,8 @@ void loop()
         debug_msg("done");
       }else{
         debug_msg("failed");
+        Serial.println(ret);
       }
-      Serial.println(ret);
     }
   }
 
