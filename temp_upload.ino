@@ -122,14 +122,12 @@ void loop()
 
   if(epoch != old_epoch){
     char buf[32];
-    sprintf(buf, "temperature = %f", tempsensor.readTemperature());
-    //dtostrf(tempsensor.readTemperature(), 16, 2, buf);
+    dtostrf(tempsensor.readTemperature(), 16, 2, buf);
     debug_msg(buf);
 
     if(epoch % 60 == 0){
       debug_msg("uploading...");
-      sprintf(buf, "temperature = %f", tempsensor.readTemperature());
-      //dtostrf(tempsensor.readTemperature(), 16, 2, buf);
+      dtostrf(tempsensor.readTemperature(), 16, 2, temperature_str);
 
       for(int i = 0; i < sizeof(fiap_elements)/sizeof(fiap_elements[0]); i++){
         fiap_elements[i].time = epoch;
