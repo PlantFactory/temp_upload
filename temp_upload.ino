@@ -158,8 +158,10 @@ void debug_msg(String msg)
 void print_time()
 {
   char print_time_buf[32];
+  TimeElements* tm;
+  tm = localtime();
   sprintf(print_time_buf, "%04d/%02d/%02d %02d:%02d:%02d",
-      year(), month(), day(), hour(), minute(), second());
+      tm->Year + 1970, tm->Month, tm->Day, tm->Hour, tm->Minute, tm->Second);
   Serial.print(print_time_buf);
 }
 
