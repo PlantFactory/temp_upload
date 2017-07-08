@@ -121,13 +121,11 @@ void loop()
   }
 
   if(epoch != old_epoch){
-    char buf[32];
-    dtostrf(tempsensor.readTemperature(), 16, 2, buf);
-    debug_msg(buf);
+    dtostrf(tempsensor.readTemperature(), -1, 2, temperature_str);
+    debug_msg(temperature_str);
 
     if(epoch % 60 == 0){
       debug_msg("uploading...");
-      dtostrf(tempsensor.readTemperature(), 16, 2, temperature_str);
 
       for(int i = 0; i < sizeof(fiap_elements)/sizeof(fiap_elements[0]); i++){
         fiap_elements[i].time = epoch;
